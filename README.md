@@ -1,8 +1,95 @@
 # link_parsing_API
-This code sets up an image storage service using Node.js, Express, and MongoDB. It uses Multer to handle file uploads and uuid to generate unique filenames for the uploaded images. The uploaded images are stored in a directory called "image_uploads/images/", which is created if it does not exist. The service listens on port 3000, or on the environment variable PORT if it is defined.
+This code exports three functions. "parseUrl" parses a URL string and returns an object containing its components. "explainUrlComponents" takes a URL string and returns a formatted string explaining its components. "parseMultipleUrls" takes an array of URLs and returns an array of objects where each object represent a parsed URL string.
+
+Here is the Readme, which explains the code and its exports:
+
+URL Parsing
+This module exports three functions related to URL parsing.
+
+parseUrl(urlString)
+Parses a URL string and returns an object containing its components. The parsed URL object contains:
+
+scheme: The protocol of the URL (without the trailing ":").
+domain: The domain name of the URL.
+port: The port number specified in the URL (if any).
+path: The path of the URL.
+query: An object representation of the query string.
+fragment: The fragment identifier (if any).
+Example usage:
+
+Js
 
 
-The code sets up two endpoints: "/upload" for uploading images and "/image/:id" for deleting images. When a file is uploaded, its name is changed to a unique UUID and saved in the "image_uploads/images/" directory. The URL of the uploaded image is then saved in the MongoDB database. When an image is deleted, its file is removed from the directory and its entry is deleted from the database.
+const { parseUrl } = require("./urlUtils");
+
+const parsed = parseUrl("https://subdomain.example.com:8080/path/to/page?query=string&some_part=1");
+console.log(parsed);
+// Output:
+// {
+//   scheme: "https",
+//   domain: "subdomain.example.com",
+//   port: "8080",
+//   path: "/path/to/page",
+//   query: { query: "string", some_part: "1" },
+//   fragment: ""
+// }
+explainUrlComponents(urlString)
+This function takes a URL string and returns a formatted string explaining its components. The output will contain:
+
+Scheme: The protocol of the URL.
+Domain: The domain name of the URL.
+Port (if specified).
+Path: The path of the URL.
+Query parameters (if specified).
+Fragment identifier (if specified).
+Example usage:
+
+Js
 
 
-To run the code, the user must install the required dependencies: Express, Mongoose, Multer, and uuid. Additionally, the user must set up a MongoDB database and provide the connection string in the code. Once this is done, the user can run the program with the command "node app.js".
+const { explainUrlComponents } = require("./urlUtils");
+
+const explanation = explainUrlComponents("https://subdomain.example.com:8080/path/to/page?query=string&some_part=1");
+console.log(explanation);
+// Output:
+// Scheme: https
+// Domain: subdomain.example.com
+// Port: 8080
+// Path: /path/to/page
+// Query parameters:
+// - query: string
+// - some_part: 1
+parseMultipleUrls(urls)
+This function takes an array of URLs and returns an array of objects where each object represents a parsed URL string.
+
+Example usage:
+
+Js
+
+
+const { parseMultipleUrls } = require("./urlUtils");
+
+const parsedUrls = parseMultipleUrls([
+  "https://subdomain.example.com:8080/path/to/page?query=string&some_part=1",
+  "https://subdomain.example.com:8080/path/to/page?query=string&some_part=2",
+]);
+console.log(parsedUrls);
+// Output:
+// [
+//   {
+//     scheme: "https",
+//     domain: "subdomain.example.com",
+//     port: "8080",
+//     path: "/path/to/page",
+//     query: { query: "string", some_part: "1" },
+//     fragment: ""
+//   },
+//   {
+//     scheme: "https",
+//     domain: "subdomain.example.com",
+//     port: "8080",
+//     path: "/path/to/page",
+//     query: { query: "string", some_part: "2" },
+//     fragment: ""
+//   }
+// ]
