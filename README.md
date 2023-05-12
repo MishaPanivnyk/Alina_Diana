@@ -1,96 +1,16 @@
 # link_parsing_API
-URL Parsing
+Цей код експортує три функції для парсингу URL-адрес.
 
-This module exports three functions related to URL parsing.
+parseUrl(urlString) - Функція для розбору URL-адрес зі строки та повертає об’єкт, що містить складові URL-адрес.
 
-parseUrl(urlString)
+explainUrlComponents(urlString) - Функція отримує URL-адрес документу у вигляді рядка та повертає рядок, що містить складові URL-адрес.
 
-Parses a URL string and returns an object containing its components. The parsed URL object contains:
+parseMultipleUrls(urls) - Функція отримує масив URL-адрес то повертає масив об’єктів, що містять складові URL-адрес.
 
-scheme: The protocol of the URL (without the trailing ":").
-domain: The domain name of the URL.
-port: The port number specified in the URL (if any).
-path: The path of the URL.
-query: An object representation of the query string.
-fragment: The fragment identifier (if any).
+Кожна з функцій використовує модуль url і розбирає URL-адреси на складові частини за допомогою класу URL. Об’єкт, що повертає функція parseUrl, містить: схему, домен, порт, шлях, об'єкт, що містить параметри запиту, та фрагмент.
 
-Example usage:
+Функція explainUrlComponents приймає URL-адрес документу та повертає рядок, який містить складові частини URL-адреси відформатованими в зручний для сприйняття користувача спосіб.
 
-Js
-const { parseUrl } = require("./urlUtils");
+Функція parseMultipleUrls приймає масив URL-адрес та повертає масив об’єктів, що містять складові частини кожного URL-адреси.
 
-const parsed = parseUrl("https://subdomain.example.com:8080/path/to/page?query=string&some_part=1");
-console.log(parsed);
-// Output:
-// {
-//   scheme: "https",
-//   domain: "subdomain.example.com",
-//   port: "8080",
-//   path: "/path/to/page",
-//   query: { query: "string", some_part: "1" },
-//   fragment: ""
-// }
-
-explainUrlComponents(urlString)
-
-This function takes a URL string and returns a formatted string explaining its components. The output will contain:
-
-Scheme: The protocol of the URL.
-Domain: The domain name of the URL.
-Port (if specified).
-Path: The path of the URL.
-Query parameters (if specified).
-Fragment identifier (if specified).
-
-Example usage:
-
-Js
-const { explainUrlComponents } = require("./urlUtils");
-
-const explanation = explainUrlComponents("https://subdomain.example.com:8080/path/to/page?query=string&some_part=1");
-console.log(explanation);
-// Output:
-// Scheme: https
-// Domain: subdomain.example.com
-// Port: 8080
-// Path: /path/to/page
-// Query parameters:
-// - query: string
-// - some_part: 1
-
-parseMultipleUrls(urls)
-
-This function takes an array of URLs and returns an array of objects where each object represents a parsed URL string.
-
-Example usage:
-
-Js
-const { parseMultipleUrls } = require("./urlUtils");
-
-const parsedUrls = parseMultipleUrls([
-  "https://subdomain.example.com:8080/path/to/page?query=string&some_part=1",
-  "https://subdomain.example.com:8080/path/to/page?query=string&some_part=2",
-]);
-console.log(parsedUrls);
-// Output:
-// [
-//   {
-//     scheme: "https",
-//     domain: "subdomain.example.com",
-//     port: "8080",
-//     path: "/path/to/page",
-//     query: { query: "string", some_part: "1" },
-//     fragment: ""
-//   },
-//   {
-//     scheme: "https",
-//     domain: "subdomain.example.com",
-//     port: "8080",
-//     path: "/path/to/page",
-//     query: { query: "string", some_part: "2" },
-//     fragment: ""
-//   }
-// ]
-
-
-This code exports three functions: parseUrl, explainUrlComponents, and parseMultipleUrls. Use them in your project whenever you need URL parsing functionality.
+Програміст може використовувати ці функції у проекті, коли потрібен розбір URL-адрес.
